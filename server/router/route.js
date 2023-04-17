@@ -7,6 +7,7 @@ const router = Router();
 
 // Import all controllers
 import * as controller from "../controllers/appController.js";
+import * as gameController from "../controllers/gameController.js";
 
 // POST Methods
 router.route('/register').post(
@@ -44,5 +45,14 @@ router.route('/createResetSession').get(controller.createResetSession);
 router.route('/updateUser').put(authJwt.verifyToken, controller.updateUser);
 
 router.route('/resetpassword').put(controller.verifyUser, controller.resetPassword);
+
+// Game Routes
+router.route('/addPrediction').put(gameController.addPrediction);
+
+router.route('/declarePredictionResult').put(gameController.declarePredictionResult);
+
+router.route('/getLatestPredictionId').get(gameController.getLatestPredictionId);
+
+router.route('/getWinnings').get(gameController.getWinnings);
 
 export default router;

@@ -1,50 +1,26 @@
-// import mongoose from "mongoose";
-
-// export const UserSchema = new mongoose.Schema({
-//     username: {
-//         type: String,
-//         required: [true, "Please provide a username"],
-//         unique: [true, "Username already exists"]
-//     },
-//     password: {
-//         type: String,
-//         required: [true, "Please provide a password"],
-//         unique: false
-//     },
-//     email: {
-//         type: String,
-//         required: [true, "Please provide an email"],
-//         unique: [true, "Email already in use"]
-//     },
-//     firstName: { type: String },
-//     lastName: { type: String },
-//     mobile: { type: Number },
-//     address: { type: String },
-//     profile: { type: String },
-//     top5Picks: {
-//         date: Date,
-//         time: String,
-//         stocks: [{
-//             stockName: String,
-//             stockSymbol: String,
-//             currentPrice: Number,
-//             futurePrice: Number,
-//             result: String
-//         }]
-//     },
-//     predictions: [{
-//         stockName: String,
-//         stockSymbol: String,
-//         currentPrice: Number,
-//         futurePrice: Number,
-//         direction: String,
-//         result: String
-//     }]
-// });
-
-// export default mongoose.model.Users || mongoose.model('User', UserSchema);
-
 import mongoose from "mongoose";
+
+export const stockPredictionSchema = new mongoose.Schema({
+    date: { type: String },
+    time: { type: String },
+    stockName: { type: String },
+    stockSymbol: { type: String },
+    currentPrice: { type: Number },
+    futurePrice: { type: Number },
+    direction: { type: String },
+    result: { type: String },
+});
+
+export const top5PicksSchema = {
+    date: Date,
+    stocks: [{
+        stockName: String,
+        stockSymbol: String,
+        currentPrice: Number,
+        futurePrice: Number,
+        result: String
+    }]
+}
 
 export const UserSchema = new mongoose.Schema({
     username: {
@@ -67,25 +43,13 @@ export const UserSchema = new mongoose.Schema({
     mobile: { type: Number },
     address: { type: String },
     profile: { type: String },
-    top5Picks: {
-        date: Date,
-        time: String,
-        stocks: [{
-            stockName: String,
-            stockSymbol: String,
-            currentPrice: Number,
-            futurePrice: Number,
-            result: String
-        }]
-    },
-    predictions: [{
-        stockName: String,
-        stockSymbol: String,
-        currentPrice: Number,
-        futurePrice: Number,
-        direction: String,
-        result: String
-    }]
+    top5Picks: [
+        top5PicksSchema
+    ],
+    predictions: [
+        stockPredictionSchema
+    ],
+    winnings: { type: Number }
 });
 
 export default mongoose.model.Users || mongoose.model('User', UserSchema);

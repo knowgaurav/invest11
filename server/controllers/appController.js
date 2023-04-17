@@ -24,7 +24,8 @@ export async function register(req, res) {
         username: req.body.username,
         email: req.body.email,
         password: bcrypt.hashSync(req.body.password, 8),
-        profile: req.body.profile
+        profile: req.body.profile,
+        winnings: 0
     });
 
     user.save()
