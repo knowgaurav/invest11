@@ -47,3 +47,5 @@ connect()
         }
     })
     .catch(err => console.error("Invalid database connection: " + err));
+
+export default app;
