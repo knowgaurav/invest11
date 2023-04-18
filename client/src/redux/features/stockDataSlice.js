@@ -10,14 +10,13 @@ export const stockPriceApi = createAsyncThunk(
         url: "https://twelve-data1.p.rapidapi.com/price",
         params: { symbol: data, format: "json", outputsize: "30" },
         headers: {
-          "X-RapidAPI-Key":
-            process.env.REACT_APP_RAPID_API_KEY,
+          "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
           "X-RapidAPI-Host": "twelve-data1.p.rapidapi.com",
         },
       };
 
-      // const result = await axios(options);
-      // return fulfillWithValue(result.data.price);
+      const result = await axios(options);
+      return fulfillWithValue(result.data.price);
     } catch (error) {
       console.log(error);
     }
@@ -28,7 +27,6 @@ export const stockTimeSeriesApi = createAsyncThunk(
   "stock/stockTimeSeriesApi",
   async (data, { fulfillWithValue }) => {
     try {
-      console.log(data);
       const options = {
         method: "GET",
         url: "https://twelve-data1.p.rapidapi.com/time_series",
@@ -39,14 +37,13 @@ export const stockTimeSeriesApi = createAsyncThunk(
           format: "json",
         },
         headers: {
-          "X-RapidAPI-Key":
-            process.env.REACT_APP_RAPID_API_KEY,
+          "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
           "X-RapidAPI-Host": "twelve-data1.p.rapidapi.com",
         },
       };
 
-      // const result = await axios(options);
-      // return fulfillWithValue(result.data);
+      const result = await axios(options);
+      return fulfillWithValue(result.data);
     } catch (error) {
       console.log(error);
     }

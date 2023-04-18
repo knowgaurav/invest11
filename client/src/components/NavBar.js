@@ -30,9 +30,6 @@ const NavBar = () => {
       .unwrap()
       .then(() => navigate("/login"));
   };
-  useEffect(() => {
-    dispatch(getWinningsApi());
-  }, []);
   return (
     <>
       <div className="p-5 sm:p-3 bg-white flex items-center justify-end sm:justify-between h-20 shrink-0 border-b">

@@ -20,9 +20,6 @@ const SideBar = () => {
       .unwrap()
       .then(() => navigate("/login"));
   };
-  useEffect(() => {
-    dispatch(getWinningsApi());
-  }, []);
   return (
     <div className="flex flex-col gap-10 w-64 px-5 py-5 border-r h-screen text-black shrink-0 bg-white sm:hidden">
       <div className="text-center text-lg font-bold">Investing IQ</div>

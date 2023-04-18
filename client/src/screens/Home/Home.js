@@ -5,7 +5,10 @@ import WatchList from "./components/WatchList";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { userDataApi } from "../../redux/features/authSlice";
-import { getWinningsApi } from "../../redux/features/bidSlice";
+import {
+  declareResultApi,
+  getWinningsApi,
+} from "../../redux/features/bidSlice";
 import moment from "moment";
 import { closeSideBar } from "../../redux/features/mobileSidebarSlice";
 
@@ -16,6 +19,7 @@ const Home = () => {
   useEffect(() => {
     dispatch(closeSideBar());
     dispatch(userDataApi());
+    dispatch(getWinningsApi())
   }, []);
 
   const [date, setDate] = useState(new Date());
@@ -30,7 +34,11 @@ const Home = () => {
   }, []);
   useEffect(() => {
     if (date.toLocaleTimeString() === "5:00:00 PM") {
-      dispatch(getWinningsApi());
+      dispatch(declareResultApi())
+        .unwrap()
+        .then(() => {
+          dispatch(getWinningsApi());
+        });
     }
   }, [date]);
   return (

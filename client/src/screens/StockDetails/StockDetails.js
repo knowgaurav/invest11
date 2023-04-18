@@ -22,7 +22,7 @@ const StockDetails = () => {
   return (
     <div className="flex gap-5 w-full sm:flex-col">
       <div className="bg-white p-4 rounded-lg flex flex-col gap-3 w-1/3 sm:w-full h-full">
-        <StockDescription />
+        <StockDescription symbol={id} />
       </div>
       <div className="bg-white p-4 rounded-lg flex flex-col gap-3 w-2/3 sm:w-full">
         <Header data={graphData?.meta} />

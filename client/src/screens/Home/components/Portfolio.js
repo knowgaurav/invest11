@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import * as Icon from "react-feather";
-import { stockImages } from "../../../dummyData";
+import { stockImages, stockProfile } from "../../../dummyData";
 import { useDispatch, useSelector } from "react-redux";
 import { stockTimeSeriesApi } from "../../../redux/features/stockDataSlice";
 
@@ -29,8 +29,11 @@ const Portfolio = ({ setGraphData }) => {
           </div>
         ) : (
           <div className="grid grid-cols-5 sm:grid-cols-1 gap-5">
-            {predictions?.map((item, index) => {
+            {predictions?.slice(0, 6).map((item, index) => {
               if (item.direction === "Buy") {
+                let profile = stockProfile.filter(
+                  (x) => x.Symbol === item.stockSymbol
+                )[0];
                 return (
                   <button
                     key={index}
@@ -44,11 +47,7 @@ const Portfolio = ({ setGraphData }) => {
                     }
                   >
                     <div className="flex items-center gap-2">
-                      <img
-                        src={stockImages[0]}
-                        alt="item"
-                        className="w-10 h-10"
-                      />
+                      <img src={profile?.logo} alt="item" className="w-10 h-10" />
                       <div className="text-left">
                         <div className="text-black font-semibold">
                           {item.stockName}

@@ -7,11 +7,14 @@ import { useDispatch } from "react-redux";
 import { makeBidApi } from "../../../redux/features/bidSlice";
 import { toast } from "react-hot-toast";
 import { XMarkIcon } from "@heroicons/react/24/outline";
+import { stockPriceApi } from "../../../redux/features/stockDataSlice";
+import { ThreeDots } from "react-loader-spinner";
 
 const ListCard = ({ item, button1, button2, icon, index }) => {
   const dispatch = useDispatch();
   const [openPredictionModal, setOpenPredictionModal] = useState(false);
   const [bidType, setBidType] = useState("");
+  const [stockPrice, setStockPrice] = useState("");
 
   const handleClick = (data) => {
     if (!bidType) {
@@ -38,34 +41,46 @@ const ListCard = ({ item, button1, button2, icon, index }) => {
     }
   };
 
+  const getStockPrice = () => {
+    dispatch(stockPriceApi(item.symbol))
+      .unwrap()
+      .then((res) => setStockPrice(res));
+  };
+
   return (
     <>
       <div className="grid grid-cols-5 sm:grid-cols-1 gap-5 items-center w-full py-5 px-5">
         <div className="font-medium flex items-center gap-3">
-          <img alt="stock" src={stockImages[index]} className="w-9 h-9" />
+          <img alt="stock" src={item.logo} className="w-9 h-9" />
           <Link to={item.symbol}>
             <div>{item.symbol}</div>
             <div className="text-xs text-gray-500">{item.name}</div>
           </Link>
         </div>
         <div>
-          <div>Currency:</div>
+          <div className="font-medium">Currency:</div>
           <div className="text-xs text-gray-500">{item.name}</div>
         </div>
         <div>
-          <div>Exchange:</div>
+          <div className="font-medium">Exchange:</div>
           <div className="text-xs text-gray-500">{item.exchange}</div>
         </div>
         <div>
-          <div>Country:</div>
+          <div className="font-medium">Country:</div>
           <div className="text-xs text-gray-500">{item.country}</div>
         </div>
-        <button
-          onClick={() => setOpenPredictionModal(true)}
-          className="w-fit bg-blue-100 hover:bg-blue-200 py-1 px-2 rounded-md font-medium"
-        >
-          Future prediction
-        </button>
+        <div>
+          <div className="font-medium">Actions:</div>
+          <button
+            onClick={() => {
+              setOpenPredictionModal(true);
+              getStockPrice();
+            }}
+            className="w-fit bg-blue-100 hover:bg-blue-200 py-1 px-2 rounded-md font-medium"
+          >
+            Predict Price
+          </button>
+        </div>
       </div>
 
       {openPredictionModal && (
@@ -78,8 +93,22 @@ const ListCard = ({ item, button1, button2, icon, index }) => {
               <XMarkIcon className="w-5 h-5" />
             </button>
             <div className="text-center">
-              <div>Stock Name : {item.symbol}</div>
-              <div>Current Stock Price : 1234</div>
+              <div>Stock Symbol : {item.symbol}</div>
+              <div>Stock Name : {item.name}</div>
+              <div className="flex">
+                <div className="mr-2">Current Stock Price :</div>
+                {stockPrice ? (
+                  `$${stockPrice}`
+                ) : (
+                  <ThreeDots
+                    height="20"
+                    width="20"
+                    radius="9"
+                    color="black"
+                    visible={true}
+                  />
+                )}
+              </div>
             </div>
             <div className="flex gap-5 items-center">
               <button
